@@ -7,7 +7,7 @@ import datetime
 import subprocess
 import re
 
-debug = False
+debugOn = False
 onTimes = \
     [    # weekday      #HH:MM   #HH:MM
         (range(0,3 +1), ( 7,00), (22,00)),   # Mo - Do
@@ -16,9 +16,10 @@ onTimes = \
     ]
 
 
-def debug(text):
-    if debug:
-        print(text)
+def debug(msg):
+    if debugOn:
+        print(msg)
+        subprocess.check_output('logger "nightmode :: %s"' % msg, shell=True)
 
 
 def timeInRange(timerange):

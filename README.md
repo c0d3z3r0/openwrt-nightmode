@@ -35,7 +35,8 @@ EOF
 The script is called via cronjob every five minutes. It checks if the current time for the current weekday is in the range of your defined onTimes. If so it enables your wifi, if not it disables it. When you need wifi while you're out of your onTimes just push the WPS button the script enables wifi and you have some minutes to connect to wifi. It will stay on while at least one device is connected and will turn off after the last device disconnected and your are out of onTimes.
 
 ## How can I debug it?
-Just replace debug=False with debug=True and the script will output some more or less helpful messages.
+Just replace debugOn=False with debugOn=True and the script will output some more or less helpful messages to dmesg.
+`logread -f` is your friend :-)
 
 ## Warning
 The script uses the WPS button for interrupting the nightmode. If you need the button you cannot use this feature. Everything else will work.
