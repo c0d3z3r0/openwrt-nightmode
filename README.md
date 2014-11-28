@@ -5,10 +5,10 @@ Nightmode script for OpenWRT devices
 ## Installation
 Clone this repo and then:
 ```bash
-scp nightmode.py root@<your openwrt device>:/usr/local/sbin/
+scp nightmode.py root@<your openwrt device>:/usr/sbin/
 ssh root@<your openwrt device>
 
-chmod +x /usr/local/sbin/nightmode.py
+chmod +x /usr/sbin/nightmode.py
 opkg update
 # maybe you need kmod-gpio-button-hotplug and kmod-button-hotplug
 opkg install python iw kmod-gpio-button-hotplug kmod-button-hotplug
@@ -21,7 +21,7 @@ cat <<EOF >/etc/rc.button/wps
 [ "${ACTION}" = "released" ] || exit 0
 
 uci set wireless.nightmode.interrupt=1
-/usr/local/sbin/nightmode.py
+/usr/sbin/nightmode.py
 EOF
 
 cat <<EOF >>/etc/crontabs/root
