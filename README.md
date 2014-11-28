@@ -7,11 +7,14 @@ Clone this repo and then:
 ```bash
 scp nightmode.py root@<your openwrt device>:/usr/local/sbin/
 ssh root@<your openwrt device>
+
 chmod +x /usr/local/sbin/nightmode.py
 opkg update
 # maybe you need kmod-gpio-button-hotplug and kmod-button-hotplug
 opkg install python iw kmod-gpio-button-hotplug kmod-button-hotplug
+
 cp /etc/rc.button/wps /etc/rc.button/wps.orig
+
 cat <<EOF >/etc/rc.button/wps
 #!/bin/sh
 
@@ -20,9 +23,11 @@ cat <<EOF >/etc/rc.button/wps
 uci set wireless.nightmode.interrupt=1
 /usr/local/sbin/nightmode.py
 EOF
+
 cat <<EOF >>/etc/crontabs/root
 */5  *  *  *  *  /usr/local/sbin/nightmode.py
 EOF
+
 /etc/init.d/cron restart
 ```
 
