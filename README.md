@@ -25,7 +25,7 @@ uci set wireless.nightmode.interrupt=1
 EOF
 
 cat <<EOF >>/etc/crontabs/root
-*/5  *  *  *  *  /usr/local/sbin/nightmode.py
+*/5  *  *  *  *  /usr/sbin/nightmode.py
 EOF
 
 /etc/init.d/cron restart
