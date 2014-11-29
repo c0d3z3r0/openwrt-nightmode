@@ -10,23 +10,22 @@ ssh root@<your openwrt device>
 
 chmod +x /usr/sbin/nightmode.py
 opkg update
-# maybe you need kmod-gpio-button-hotplug and kmod-button-hotplug
+# you need kmod-gpio-button-hotplug and kmod-button-hotplug
 opkg install python iw kmod-gpio-button-hotplug kmod-button-hotplug
 
-cp /etc/rc.button/wps /etc/rc.button/wps.orig
+mv /etc/rc.button/wps /etc/rc.button/wps.orig
+mkdir -p /etc/hotplug.d/button/
 
-cat <<EOF >/etc/rc.button/wps
-#!/bin/sh
+# THIS IS HARDWARE DEPENDET! Tested with TP-Link TPL-WDR4300
+echo '#!/bin/sh
 
 [ "${ACTION}" = "released" ] || exit 0
 
 uci set wireless.nightmode.interrupt=1
-/usr/sbin/nightmode.py
-EOF
+/usr/sbin/nightmode.py' >/etc/hotplug.d/button/wps
 
-cat <<EOF >>/etc/crontabs/root
-*/5  *  *  *  *  /usr/sbin/nightmode.py
-EOF
+echo '*/5  *  *  *  *  /usr/sbin/nightmode.py' >>/etc/crontabs/root
+
 
 /etc/init.d/cron restart
 ```
