@@ -85,6 +85,15 @@ def getButton():
     return button
 
 
+def wifiEnabled():
+    try:
+        switch = bool(int(shell('uci get wireless.nightmode.wifion')))
+    except ValueError:
+        switch = False
+    debug("Switch: " + str(switch))
+    return switch
+
+
 def getWifi():
     if re.findall('phy', shell('iw dev')):
         debug("WiFi is on")
@@ -101,7 +110,7 @@ def setWifi(state):
 
 
 if __name__ == '__main__':
-    if onTime():
+    if onTime() and wifiEnabled():
         debug("It's onTime!")
         resetButton()
         setWifi(1)
@@ -118,4 +127,5 @@ if __name__ == '__main__':
                 resetButton()
                 setWifi(0)
         else:
+            resetButton()
             debug("There are stations connected. Keep WiFi on!")
