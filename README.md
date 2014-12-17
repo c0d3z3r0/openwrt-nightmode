@@ -16,7 +16,6 @@ opkg install python iw kmod-gpio-button-hotplug kmod-button-hotplug
 mv /etc/rc.button/wps /etc/rc.button/wps.orig
 mkdir -p /etc/hotplug.d/button/
 
-
 # THIS IS HARDWARE DEPENDENT! Tested with TP-Link TPL-WDR4300
 cat <<'EOF' >/etc/hotplug.d/button/wps
 #!/bin/sh
