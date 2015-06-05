@@ -111,7 +111,7 @@ end
 
 
 function getWifi()
-  cmd = [[iw dev | grep -c phy]]
+  cmd = [[iw dev | grep -c wlan]]
   f = assert(io.popen(cmd, 'r'))
   phy = tonumber(assert(f:read('*a')))
   if phy > 0 then

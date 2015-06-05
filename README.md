@@ -4,7 +4,8 @@ Nightmode script for OpenWRT devices
 
 ## Installation
 On your OpenWRT router:
-```bash
+
+~~~bash
 wget -O /usr/sbin/nightmode https://raw.githubusercontent.com/c0d3z3r0/openwrt-nightmode/master/nightmode.lua
 chmod +x /usr/sbin/nightmode
 opkg update
@@ -12,10 +13,10 @@ opkg update
 opkg install iw kmod-gpio-button-hotplug kmod-button-hotplug
 
 mv /etc/rc.button/wps /etc/rc.button/wps.orig
-mkdir -p /etc/hotplug.d/button/
+mv /etc/rc.button/rfkill /etc/rc.button/rfkill.orig
 
 # THIS IS HARDWARE DEPENDENT! Tested with TP-Link TPL-WDR4300
-cat <<'EOF' >/etc/hotplug.d/button/wps
+cat <<'EOF' >/etc/rc.button/wps
 #!/bin/sh
 
 [ "${ACTION}" = "released" ] || exit 0
@@ -24,7 +25,7 @@ uci set wireless.nightmode.interrupt=1
 /usr/sbin/nightmode
 EOF
 
-cat <<'EOF' >/etc/hotplug.d/button/wps
+cat <<'EOF' >/etc/rc.button/rfkill
 #!/bin/sh
 
 # Wifi on
@@ -32,19 +33,19 @@ cat <<'EOF' >/etc/hotplug.d/button/wps
 
 # Wifi off
 [ "${ACTION}" = "pressed" ] && uci set wireless.nightmode.wifion=0
+
+/usr/sbin/nightmode
 EOF
 
+chmod +x /etc/rc.button/wps /etc/rc.button/rfkill
 
-echo '*/5  *  *  *  *  /usr/sbin/nightmode' >>/etc/crontabs/root
-
+(crontab -l; echo; echo '*/5  *  *  *  *  /usr/sbin/nig
+htmode') | crontab -
 
 # initialize vars
 uci set wireless.nightmode.interrupt=0
-uci set wireless.nightmode.wifion=0
-
-
-/etc/init.d/cron restart
-```
+uci set wireless.nightmode.wifion=1
+~~~
 
 ## How it works
 The script is called via cronjob every five minutes. It checks if the current time for the current weekday is in the range of your defined onTimes. If so it enables your wifi, if not it disables it. When you need wifi while you're out of your onTimes just push the WPS button the script enables wifi and you have some minutes to connect to wifi. It will stay on while at least one device is connected and will turn off after the last device disconnected and your are out of onTimes. You can use your RFkill switch to completely disable wifi. When there are connected stations it will turn off when they disconnect. In disabled state you can use the WPS button to enable wifi like in offTimes.
