@@ -101,7 +101,7 @@ end
 
 function resetButton()
   conf:set("wireless", "nightmode", "interrupt", 0)
-  conf:commit("wireless.nightmode.interrupt")
+  conf:commit("wireless")
 end
 
 
@@ -165,9 +165,10 @@ end
 function init()
   if not conf:get("wireless", "nightmode", "wifion") or
      not conf:get("wireless", "nightmode", "interrupt") then
-       conf:set("wireless", "nightmode", "wifion", 0)
-       conf:set("wireless", "nightmode", "interrupt", 1)
-       conf:commit("wireless.nightmode")
+       conf:set("wireless", "nightmode", 0)
+       conf:set("wireless", "nightmode", "wifion", 1)
+       conf:set("wireless", "nightmode", "interrupt", 0)
+       conf:commit("wireless")
   end
 end
 
