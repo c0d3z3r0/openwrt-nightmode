@@ -5,7 +5,7 @@
 -- Begin of user settings
 -- --------------------------------------------------
 
-debugOn = false
+debugOn = true
 
 onTimes = {
 --  Weekday(s)  #HH:MM    #HH:MM
@@ -32,9 +32,13 @@ end
 
 
 function timeInRange(fromTime, toTime)
-  now = os.date('*t'); from = os.date('*t'); to = os.date('*t')
-  from.hour = fromTime[1];  from.min = fromTime[2]
-  to.hour   = toTime[1];    to.min   = toTime[2]
+  local now = os.date('*t')
+  local from = os.date('*t')
+  local to = os.date('*t')
+  from.hour = fromTime[1]
+  from.min = fromTime[2]
+  to.hour   = toTime[1]
+  to.min   = toTime[2]
 
   if os.time(from) <= os.time(now) and os.time(now) <= os.time(to) then
     debug("Time is in range.")
@@ -47,7 +51,7 @@ end
 
 
 function weekDay()
-  w = tonumber(os.date("%w"))
+  local w = tonumber(os.date("%w"))
   if w > 0 then
     return w-1
   else
@@ -57,7 +61,7 @@ end
 
 
 function onTime()
-  weekday = weekDay()
+  local weekday = weekDay()
   for x, o in pairs(onTimes) do
     for y, i in pairs(o[1]) do
       if i == weekday then
@@ -78,10 +82,10 @@ end
 
 
 function countStations()
-  cmd = [[(for dev in `ifconfig | grep -o 'wlan[0-9]\(-[0-9]\)*'`;
-          do iw dev $dev station dump; done) | grep -c Station]]
-  f = assert(io.popen(cmd, 'r'))
-  stations = tonumber(assert(f:read('*a')))
+  local cmd = [[(for dev in `ifconfig | grep -o 'wlan[0-9]\(-[0-9]\)*'`;
+                do iw dev $dev station dump; done) | grep -c Station]]
+  local f = assert(io.popen(cmd, 'r'))
+  local stations = tonumber(assert(f:read('*a')))
   debug("Stations: " .. stations)
   return stations
 end
@@ -102,7 +106,7 @@ end
 
 
 function getButton()
-  button = tonumber(conf:get("wireless", "nightmode", "interrupt"))
+  local button = tonumber(conf:get("wireless", "nightmode", "interrupt"))
   debug("Button: " .. button)
   if button == 1 then
     return true
@@ -113,9 +117,9 @@ end
 
 
 function getWifi()
-  cmd = [[iw dev | grep -c wlan]]
-  f = assert(io.popen(cmd, 'r'))
-  phy = tonumber(assert(f:read('*a')))
+  local cmd = [[iw dev | grep -c wlan]]
+  local f = assert(io.popen(cmd, 'r'))
+  local phy = tonumber(assert(f:read('*a')))
   if phy > 0 then
     debug("WiFi is on")
     return true
@@ -127,7 +131,7 @@ end
 
 
 function wifiEnabled()
-  switch = tonumber(conf:get("wireless", "nightmode", "wifion"))
+  local switch = tonumber(conf:get("wireless", "nightmode", "wifion"))
   debug("Switch: " .. switch)
   if switch == 1 then
     return true
