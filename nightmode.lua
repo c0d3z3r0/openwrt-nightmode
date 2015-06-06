@@ -19,6 +19,10 @@ onTimes = {
 -- --------------------------------------------------
 
 
+require("uci")
+conf = uci.cursor()
+
+
 function debug(msg)
   if debugOn == true then
     print(msg)
@@ -92,15 +96,13 @@ end
 
 
 function resetButton()
-  os.execute("uci set wireless.nightmode.interrupt=0")
-  os.execute("uci commit wireless.nightmode.interrupt")
+  conf:set("wireless", "nightmode", "interrupt", 0)
+  conf:commit("wireless.nightmode.interrupt")
 end
 
 
 function getButton()
-  cmd = [[uci get wireless.nightmode.interrupt]]
-  f = assert(io.popen(cmd, 'r'))
-  button = tonumber(assert(f:read('*a')))
+  conf:get("wireless", "nightmode", "interrupt")
   debug("Button: " .. button)
   if button == 1 then
     return true
@@ -125,9 +127,7 @@ end
 
 
 function wifiEnabled()
-  cmd = [[uci get wireless.nightmode.wifion]]
-  f = assert(io.popen(cmd, 'r'))
-  switch = tonumber(assert(f:read('*a')))
+  u:get("wireless", "nightmode", "wifion")
   debug("Switch: " .. switch)
   if switch == 1 then
     return true

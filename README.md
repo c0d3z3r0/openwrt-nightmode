@@ -10,12 +10,12 @@ wget -O /usr/sbin/nightmode https://raw.githubusercontent.com/c0d3z3r0/openwrt-n
 chmod +x /usr/sbin/nightmode
 opkg update
 # you need iw, kmod-gpio-button-hotplug and kmod-button-hotplug
-opkg install iw kmod-gpio-button-hotplug kmod-button-hotplug
+opkg install iw kmod-gpio-button-hotplug kmod-button-hotplug libuci-lua
 
 mv /etc/rc.button/wps /etc/rc.button/wps.orig
 mv /etc/rc.button/rfkill /etc/rc.button/rfkill.orig
 
-# THIS IS HARDWARE DEPENDENT! Tested with TP-Link TPL-WDR4300
+# THIS IS MAYBE HARDWARE DEPENDENT! Tested with TP-Link TPL-WDR4300
 cat <<'EOF' >/etc/rc.button/wps
 #!/bin/sh
 
