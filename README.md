@@ -41,10 +41,6 @@ chmod +x /etc/rc.button/wps /etc/rc.button/rfkill
 
 (crontab -l; echo; echo '*/5  *  *  *  *  /usr/sbin/nig
 htmode') | crontab -
-
-# initialize vars
-uci set wireless.nightmode.interrupt=0
-uci set wireless.nightmode.wifion=1
 ~~~
 
 ## How it works

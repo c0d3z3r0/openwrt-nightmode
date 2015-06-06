@@ -158,6 +158,16 @@ function setWifi(state)
 end
 
 
+function init()
+  if not u:get("wireless", "nightmode", "wifion") or
+     not u:get("wireless", "nightmode", "interrupt") then
+       u:set("wireless", "nightmode", "wifion", 0)
+       u:set("wireless", "nightmode", "interrupt", 1)
+       u:commit("wireless.nightmode")
+  end
+end
+
+
 function main()
   if onTime() and wifiEnabled() then
     debug("It's onTime!")
@@ -184,4 +194,5 @@ function main()
 end
 
 
+init()
 main()
