@@ -102,7 +102,7 @@ end
 
 
 function getButton()
-  conf:get("wireless", "nightmode", "interrupt")
+  button = tonumber(conf:get("wireless", "nightmode", "interrupt"))
   debug("Button: " .. button)
   if button == 1 then
     return true
@@ -127,7 +127,7 @@ end
 
 
 function wifiEnabled()
-  u:get("wireless", "nightmode", "wifion")
+  switch = tonumber(conf:get("wireless", "nightmode", "wifion"))
   debug("Switch: " .. switch)
   if switch == 1 then
     return true
@@ -159,11 +159,11 @@ end
 
 
 function init()
-  if not u:get("wireless", "nightmode", "wifion") or
-     not u:get("wireless", "nightmode", "interrupt") then
-       u:set("wireless", "nightmode", "wifion", 0)
-       u:set("wireless", "nightmode", "interrupt", 1)
-       u:commit("wireless.nightmode")
+  if not conf:get("wireless", "nightmode", "wifion") or
+     not conf:get("wireless", "nightmode", "interrupt") then
+       conf:set("wireless", "nightmode", "wifion", 0)
+       conf:set("wireless", "nightmode", "interrupt", 1)
+       conf:commit("wireless.nightmode")
   end
 end
 
