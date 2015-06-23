@@ -117,10 +117,12 @@ end
 
 
 function getWifi()
+  local count = 0
+  conf:foreach("wireless", "wifi-iface", function(s) count=count+1 end)
   local cmd = [[iw dev | grep -c wlan]]
   local f = assert(io.popen(cmd, 'r'))
   local phy = tonumber(assert(f:read('*a')))
-  if phy > 0 then
+  if phy == count then
     debug("WiFi is on")
     return true
   else
