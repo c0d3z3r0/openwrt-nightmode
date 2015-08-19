@@ -52,3 +52,9 @@ Just set debugOn to true and the script will output some more or less helpful me
 
 ## Warning
 The script uses the WPS button for interrupting the nightmode. If you need the button you cannot use this feature. Everything else will work.
+
+# License
+
+Copyright (C) 2015 Michael Niewöhner
+
+This is open source software, licensed under GPLv2. See the file LICENSE for details.
