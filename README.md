@@ -29,10 +29,10 @@ cat <<'EOF' >/etc/rc.button/rfkill
 #!/bin/sh
 
 # Wifi on
-[ "${ACTION}" = "released" ] && uci set wireless.nightmode.wifion=1
+[ "${ACTION}" = "pressed" ] && uci set wireless.nightmode.wifion=1
 
 # Wifi off
-[ "${ACTION}" = "pressed" ] && uci set wireless.nightmode.wifion=0
+[ "${ACTION}" = "released" ] && uci set wireless.nightmode.wifion=0
 
 /usr/sbin/nightmode
 EOF
