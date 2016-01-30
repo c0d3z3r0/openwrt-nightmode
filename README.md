@@ -9,7 +9,7 @@ On your OpenWRT router:
 wget -O /usr/sbin/nightmode https://raw.githubusercontent.com/c0d3z3r0/openwrt-nightmode/master/nightmode.lua
 chmod +x /usr/sbin/nightmode
 opkg update
-# you need iw, kmod-gpio-button-hotplug and kmod-button-hotplug
+# you need iw, kmod-gpio-button-hotplug, kmod-button-hotplug and libuci-lua
 opkg install iw kmod-gpio-button-hotplug kmod-button-hotplug libuci-lua
 
 mv /etc/rc.button/wps /etc/rc.button/wps.orig
@@ -39,8 +39,7 @@ EOF
 
 chmod +x /etc/rc.button/wps /etc/rc.button/rfkill
 
-(crontab -l; echo; echo '*/5  *  *  *  *  /usr/sbin/nig
-htmode') | crontab -
+(crontab -l; echo; echo '*/5  *  *  *  *  /usr/sbin/nightmode') | crontab -
 ~~~
 
 ## How it works
